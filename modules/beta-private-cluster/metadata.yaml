@@ -80,6 +80,8 @@ spec:
         location: examples/simple_fleet_app_operator_permissions
       - name: simple_regional
         location: examples/simple_regional
+      - name: simple_regional_additional_ip_ranges
+        location: examples/simple_regional_additional_ip_ranges
       - name: simple_regional_beta
         location: examples/simple_regional_beta
       - name: simple_regional_cluster_autoscaling
@@ -271,6 +273,18 @@ spec:
           default-node-pool: {}
       - name: node_pools_cgroup_mode
         description: Map of strings containing cgroup node config by node-pool name
+        varType: map(string)
+        defaultValue:
+          all: ""
+          default-node-pool: ""
+      - name: node_pools_transparent_hugepage_enabled
+        description: Map of strings containing transparent hugepage enabled node config by node-pool name
+        varType: map(string)
+        defaultValue:
+          all: ""
+          default-node-pool: ""
+      - name: node_pools_transparent_hugepage_defrag
+        description: Map of strings containing transparent hugepage defrag node config by node-pool name
         varType: map(string)
         defaultValue:
           all: ""
@@ -648,9 +662,6 @@ spec:
         description: Enable Shielded Nodes features on all nodes in this cluster
         varType: bool
         defaultValue: true
-      - name: default_compute_class_enabled
-        description: Enable Spot VMs as the default compute class for Node Auto-Provisioning
-        varType: bool
       - name: enable_binary_authorization
         description: Enable BinAuthZ Admission controller
         varType: bool
@@ -721,6 +732,10 @@ spec:
       - name: monitoring_enable_managed_prometheus
         description: Configuration for Managed Service for Prometheus. Whether or not the managed collection is enabled.
         varType: bool
+      - name: monitoring_auto_monitoring_config_scope
+        description: "Whether or not to enable GKE Auto-Monitoring. Supported values include: ALL, NONE"
+        varType: string
+        defaultValue: NONE
       - name: monitoring_enable_observability_metrics
         description: Whether or not the advanced datapath metrics are enabled.
         varType: bool
